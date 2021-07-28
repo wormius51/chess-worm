@@ -11,3 +11,17 @@ int StringsEqual (char* a, char* b) {
 		return 1;
 	return 0;
 }
+
+int StringStartsWith (char* string, char* prefix) {
+	int index = 0;
+	while (string[index] == prefix[index]) {
+		if (prefix[index] == 0)
+			return 1;
+		if (string[index] == 0)
+			return 0;
+		index++;
+	}
+	if (prefix[index] == 0)
+		return 1;
+	return 0;
+}

@@ -10,8 +10,9 @@
 
 void LogBoard (Position position);
 void LogMovesArray (Move* moves, int depth, int endDepth );
-void StartEval (char* fen);
-void StopEval ();
+
+//void StartEval (char* fen);
+//void StopEval ();
 void LogResult ();
 
 main () {
@@ -36,7 +37,7 @@ main () {
 			TakeInput(input);
 	}
 }
-
+/*
 void StartEval (char* fen) {
 	globalEvalState = MakeEvalState();
 	globalCurrentPosition = ParseFEN(fen);
@@ -60,6 +61,8 @@ void StopEval() {
 	CloseHandle(globalEvalState.threadHandle);
 	LogResult();
 }
+
+*/
 
 void LogResult() {
 	

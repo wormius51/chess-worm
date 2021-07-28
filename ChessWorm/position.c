@@ -60,7 +60,7 @@ void PlacePieces (Position* position) {
 }
 
 Position ParseFEN (char* fen) {
-	if (StringsEqual(fen, START_POSITION_STRING))
+	if (StringStartsWith(fen, START_POSITION_STRING))
 		return GetStartingPosition();
 	Position position = GetEmptyPosition();
 	PlacePiecesFEN(&position, fen);

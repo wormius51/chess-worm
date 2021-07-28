@@ -19,6 +19,7 @@ EvalState MakeEvalState () {
 DWORD WINAPI MultiThreadEval (LPVOID param) {
 	EvalState* evalState = (EvalState*)param;
 	evalState->isComplete = 0;
+	evalState->position = &globalCurrentPosition;
 	DWORD threadIds[MAX_CANDIDATE_MOVES];
 	HANDLE threadHandles[MAX_CANDIDATE_MOVES];
 	EvalState evalStates[MAX_CANDIDATE_MOVES];

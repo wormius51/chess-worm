@@ -20,21 +20,21 @@ HANDLE infoLoopThreadHandle;
 DWORD infoLoopThreadId;
 
 void TakeInput (char* input) {
-	if (StringsEqual(input, "uci")) {
+	if (StringStartsWith(input, "uci")) {
 		Identifiy();
 		SetEvalState();
 		UCIOK();
 	}
-	else if (StringsEqual(input, "isready")) {
+	else if (StringStartsWith(input, "isready")) {
 		Isready();
 	}
-	else if (StringsEqual(input, "position")) {
+	else if (StringStartsWith(input, "position")) {
 		SetPosition(input);
 	}
-	else if (StringsEqual(input, "go")) {
+	else if (StringStartsWith(input, "go")) {
 		StartEval();
 	}
-	else if (StringsEqual(input, "stop")) {
+	else if (StringStartsWith(input, "stop")) {
 		StopEval();
 	}
 }
@@ -61,17 +61,17 @@ void SetEvalState () {
 
 void SetPosition (char* input) {
 	int index = 0;
-	char spaceFound = 0;
+	char spacesFound = 0;
 	char c = 0;
 	while ((c = input[index++]) != NULL) {
 		if (c == ' ') {
-			if (spaceFound == 0)
+			if (spacesFound == 0)
 				globalCurrentPosition = ParseFEN(&(input[index]));
-			else {
+			else if (spacesFound > 1) {
 				Move move = ParseMove(&(input[index]));
 				globalCurrentPosition = PositionAfterMove(move, &globalCurrentPosition);
 			}
-			spaceFound = 1;
+			spacesFound++;
 		}
 	}
 	globalEvalState.position = &globalCurrentPosition;
@@ -87,12 +87,13 @@ void StartEval () {
 		exit(-1);
 	}
 	globalEvalState.threadHandle = threadHandle;
-
+	/*
 	infoLoopThreadHandle = CreateThread(NULL, 0, InfoLoop, &globalEvalState, 0, &infoLoopThreadId);
 	if (infoLoopThreadHandle == NULL) {
 		printf ("\nProblem in info thread.\n");
 		exit(-1);
 	}
+	*/
 }
 
 void StopEval () {
@@ -101,6 +102,7 @@ void StopEval () {
 	globalEvalState.isInterapted = 1;
 	WaitForSingleObject(globalEvalState.threadHandle, INFINITE);
 	CloseHandle(globalEvalState.threadHandle);
+	BestMove();
 }
 
 void BestMove () {
