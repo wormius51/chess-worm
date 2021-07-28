@@ -1,0 +1,73 @@
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
+#define NAME "ChessWorm"
+#define AUTHOR "Eyal Hazor"
+#define INFO_SLEEP_TIME 500
+
+#define BOARD_HEIGHT 8
+#define BOARD_WIDTH 8
+#define PIECE_TYPE_COUNT 12
+
+#define WHITE_TURN_FLAG 1
+#define WHITE_CASTLING_RIGHT_SHORT 2
+#define WHITE_CASTLING_RIGHT_LONG 4
+#define BLACK_CASTLING_RIGHT_SHORT 8
+#define BLACK_CASTLING_RIGHT_LONG 16
+
+#define LOWERCASE_FLAG 32;
+
+#define EN_PASSANTABLE 'e'
+#define EMPTY_SQUARE 'O'
+
+#define WHITE_KING 'K'
+#define WHITE_QUEEN 'Q'
+#define WHITE_ROOK 'R'
+#define WHITE_BISHOP 'B'
+#define WHITE_KNIGHT 'N'
+#define WHITE_PAWN 'P'
+
+#define BLACK_KING 'k'
+#define BLACK_QUEEN 'q'
+#define BLACK_ROOK 'r'
+#define BLACK_BISHOP 'b'
+#define BLACK_KNIGHT 'n'
+#define BLACK_PAWN 'p'
+
+#define INPUT_MAX_LENGTH 200
+#define FEN_MAX_LENGTH 92
+
+#define FEN_NULL '-'
+#define STARTING_POSITION_FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+#define START_POSITION_STRING "startpos"
+
+#define MAX_PIECE_MOVES 27
+#define MAX_MOVES 321
+#define CASTLE_SHORT 'o'
+#define CASTLE_LONG 'O'
+
+#define CALCULATION_DEPTH 10
+#define MAX_CANDIDATE_MOVES 5
+
+#define MOVES_EVAL_VALUE 3
+#define MATERIAL_EVAL_VALUE 1
+
+#define HEURISTICS_COUNT 6
+
+#define CAPTURE_MOVE_BONUS 5
+#define CHECK_MOVE_BONUS 10
+#define FORCING_MOVE_DEPTH 1
+
+// Style
+#define MATERIAL_STYLE_VALUE -1
+#define PIECE_STYLE_VALUE -2
+#define KING_STYLE_VALUE 0.5
+#define EN_PASSANT_STYLE_VALUE 42069
+
+// Degree +1 actually
+#define CHROMOSOME_POLINOM_DEGREE 10
+#define CHROMOSOME_ARGUMENTS 6
+#define EVOLUTION_STEP 1
+
+#endif // !CONSTANTS_H
+
