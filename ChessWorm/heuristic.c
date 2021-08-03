@@ -76,7 +76,8 @@ float ShallowSearchHeuristic(Move move, HeuristicContext* context) {
 	int endDepth = 0;
 	Move moveBuffer[CALCULATION_DEPTH];
 	float stylePoints = -INFINITY;
-	float eval = AlphaBeta(&afterMove, 0, moveBuffer, 0, 0, &endDepth, &stylePoints, context);
+	float e = 0;
+	float eval = AlphaBeta(&afterMove, 0, moveBuffer, 0, 0, &e, &endDepth, &stylePoints, context);
 	return (context->position->flags & WHITE_TURN_FLAG) ? eval : -eval;
 }
 
@@ -191,6 +192,6 @@ float ForcingMoveValue(Move move, Position* position, int depth) {
 	int moveCount = WriteAllFilteredMoves(moves, 0, &afterMove);
 	float value = 0;
 	for (int i = 0; i < moveCount; i++)
-		value -= ForcingMoveValue(moves[i], &afterMove, depth - 1);
+		value += ForcingMoveValue(moves[i], &afterMove, depth - 1);
 	return value;
 }

@@ -9,7 +9,8 @@
 
 void ShuffleMoves (Move* moves, int moveCount);
 
-float AlphaBeta (Position* position, Move* movesBuffer, int depth, float alpha, float beta, int* endDepth, float* stylePoints, HeuristicContext* context) {
+float AlphaBeta (Position* position, Move* movesBuffer, int depth, float alpha, float beta, float* evalOut, int* endDepth, float* stylePoints, HeuristicContext* context) {
+	nodesSearched++;
 	char colorSign = (position->flags & WHITE_TURN_FLAG) ? 1 : -1;
 	Move moves[MAX_MOVES];
 	int movesCount = WriteAllFilteredMoves(moves, 0, position);
@@ -37,7 +38,7 @@ float AlphaBeta (Position* position, Move* movesBuffer, int depth, float alpha, 
 	Move line[CALCULATION_DEPTH];
 	Move bestLine[CALCULATION_DEPTH];
 	Move bestMove = moves[0];
-	int bestEndDepth = 10000000;
+	int bestEndDepth = depth;
 	if (movesCount > MAX_CANDIDATE_MOVES)
 		movesCount = MAX_CANDIDATE_MOVES;
 	for (int i = 0; i < movesCount; i++) {
@@ -45,8 +46,9 @@ float AlphaBeta (Position* position, Move* movesBuffer, int depth, float alpha, 
 		context->previousMove = moves[i];
 		Position afterMove = PositionAfterMove(moves[i], position);
 		float innerStylePoints = -INFINITY;
-		float afterEval = AlphaBeta(&afterMove, line, depth - 1, alpha, beta, &innerEndDepth, &innerStylePoints, context);
+		float afterEval = AlphaBeta(&afterMove, line, depth - 1, alpha, beta, evalOut, &innerEndDepth, &innerStylePoints, context);
 		if (((colorSign == 1) ? (afterEval >= eval) : (afterEval <= eval)) && (innerStylePoints >= (*stylePoints))) {
+			(*evalOut) = afterEval;
 			// If this player is getting mated and it's
 			// a shorter checkmate then found, skip it.
 			if (!(((colorSign == 1) ? (afterEval == -INFINITY) : (afterEval == INFINITY)) &&
@@ -73,7 +75,7 @@ float AlphaBeta (Position* position, Move* movesBuffer, int depth, float alpha, 
 			beta = fminf(beta, eval);
 		if (globalEvalState.isInterapted) {
 			if (i == 0)
-				eval = AlphaBeta(position, movesBuffer, 0, alpha, beta, &innerEndDepth, stylePoints, context);
+				eval = AlphaBeta(position, movesBuffer, 0, alpha, beta, evalOut, &innerEndDepth, stylePoints, context);
 			break;
 		}
 	}

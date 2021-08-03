@@ -5,9 +5,12 @@
 #include <Windows.h>
 
 EvalState globalEvalState;
+EvalState evalStates[MAX_CANDIDATE_MOVES];
 
-EvalState MakeEvalState();
+EvalState MakeEvalState ();
+int BestEvalStateIndex ();
 DWORD WINAPI ThreadEval (LPVOID param);
 DWORD WINAPI MultiThreadEval (LPVOID param);
+
 
 #endif // !MULTITHREAD_EVAL_H

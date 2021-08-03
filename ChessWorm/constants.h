@@ -3,7 +3,7 @@
 
 #define NAME "ChessWorm"
 #define AUTHOR "Eyal Hazor"
-#define INFO_SLEEP_TIME 500
+#define INFO_SLEEP_TIME 1000
 
 #define BOARD_HEIGHT 8
 #define BOARD_WIDTH 8
